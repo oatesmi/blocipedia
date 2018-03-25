@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :wiki do
-    title 'Test Title'
-    body 'This is a test body. It should test out fine.'
+    title RandomData.random_sentence
+    body RandomData.random_paragraph
     private false
     user
   end
