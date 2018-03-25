@@ -2,11 +2,10 @@ require 'rails_helper'
 include RandomData
 
 RSpec.describe WikisController, type: :controller do
-let(:wiki) { create(:wiki) }
-# let(:user) { create(:user) }
+let(:user) { create(:user) }
+let(:wiki) { create(:wiki, user: user) }
 
 before do
-  # user.confirm
   sign_in wiki.user
 end
 

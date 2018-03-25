@@ -1,4 +1,18 @@
-<%= form_for @wiki do |f| %>
+<h1>New Wiki</h1>
+
+<div class="row">
+  <div class="col-md-4">
+    <p>Guidelines for wikis</p>
+    <ul>
+      <li>The first rule of Blocipedia is don't talk about Blocipedia.</li>
+    </ul>
+  </div>
+  <div class="col-md-8">
+    <%= render partial: 'form', locals: { wiki: @wiki } %>
+  </div>
+</div>
+
+<!-- <%= form_for @wiki do |f| %>
   <%= f.label :title %>
   <%= f.text_field :title %>
 
@@ -8,5 +22,5 @@
   <%= f.check_box :private %>
   <%= f.label :private %>
 
-  <%= f.sbumit "Save" %>
-<% end %>
+  <%= f.submit "Save" %>
+<% end %> -->
