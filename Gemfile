@@ -46,6 +46,8 @@ end
 
  gem 'devise'
 
+ gem 'pundit'
+
  gem 'bcrypt', '~> 3.1.7'
 
  group :development, :test do
@@ -53,4 +55,5 @@ end
    gem 'factory_bot_rails'
    gem 'rails-controller-testing'
    gem 'shoulda'
+   gem 'pundit-matchers'
  end

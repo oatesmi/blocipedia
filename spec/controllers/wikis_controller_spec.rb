@@ -9,6 +9,50 @@ before do
   sign_in wiki.user
 end
 
+context "standard user" do
+  describe "GET #index" do
+      get :index
+      expect(response).to have_http_status(:success)
+  end
+
+  it "renders the #index view" do
+    get :index
+    expect(response).to render_template :index
+  end
+
+  it "assigns wiki to @wikis" do
+    get :index
+    expect(assigns(:wikis)).to eq([wiki])
+  end
+
+  describe "GET #show" do
+    it "returns http success" do
+      get :show, params: { id: wiki.id }
+      expect(response).to have_http_status(:success)
+    end
+
+    it "renders the #show view" do
+      get :show, params: { id: wiki.id }
+      expect(response).to render_template :show
+    end
+
+    it "assigns wiki to @wiki" do
+      get :show, params: { id: wiki.id }
+      expect(assigns(:wiki)).to eq(wiki)
+    end
+  end
+
+  describe "GET new" do
+    it "returns http redirect" do
+      get :new
+      expect(response).to redirect_to(new_user_session_path)
+    end
+  end
+
+end
+
+
+
   describe "GET #index" do
     it "returns http success" do
       get :index
