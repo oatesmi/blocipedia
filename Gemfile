@@ -41,3 +41,9 @@ end
  end
 
  gem 'bootstrap-sass'
+
+ gem 'devise'
+
+ group :development, :test do
+   gem 'rspec-rails', '~> 3.7'
+ end
