@@ -9,7 +9,8 @@ class User < ApplicationRecord
   attr_accessor :login
 
 
-  before_save { self.role ||= :standard }
+  after_initialize { self.role ||= :standard }
+  before_save { self.email ||= email.downcase }
 
   validates :username,
             presence: true,

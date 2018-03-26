@@ -7,7 +7,7 @@ class ApplicationPolicy
   end
 
   def index?
-    false
+    true
   end
 
   def show?
@@ -15,11 +15,11 @@ class ApplicationPolicy
   end
 
   def create?
-    false
+    user.try(:admin?) || user.try(:premium?)
   end
 
   def new?
-    create?
+    user.try(:admin?) || user.try(:premium?)
   end
 
   def update?
@@ -31,7 +31,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    false
+    record.user == user || user.try(:admin?)
   end
 
   def scope

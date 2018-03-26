@@ -9,7 +9,12 @@ let(:wiki) { create(:wiki, user: user) }
 #   sign_in wiki.user
 # end
 
-  context "logged out" do
+  context "not logged in" do
+    # before do
+    #   user.guest_user!
+    #   sign_in wiki.user
+    # end
+
     describe "GET #index" do
       it "returns http success" do
         get :index
@@ -28,40 +33,30 @@ let(:wiki) { create(:wiki, user: user) }
     end
 
     describe "GET #show" do
-      it "returns http success" do
+      it "returns http redirect" do
         get :show, params: { id: wiki.id }
-        expect(response).to have_http_status(:success)
-      end
-
-      it "renders the #show view" do
-        get :show, params: { id: wiki.id }
-        expect(response).to render_template :show
-      end
-
-      it "assigns wiki to @wiki" do
-        get :show, params: { id: wiki.id }
-        expect(assigns(:wiki)).to eq(wiki)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "GET #new" do
       it "returns http redirect" do
         get :new
-        expect(response).to redirect_to(wikis_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "POST #create" do
       it "returns http redirect" do
         post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
-        expect(response).to redirect_to(wikis_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "GET #edit" do
       it "returns http redirect" do
         get :edit, params: { id: wiki.id }
-        expect(response).to redirect_to(wikis_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
@@ -72,14 +67,14 @@ let(:wiki) { create(:wiki, user: user) }
 
         put :update, params: { id: wiki.id, wiki: { title: new_title, body: new_body } }
 
-        expect(response).to redirect_to(wikis_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "GET #destroy" do
       it "returns http redirect" do
         delete :destroy, params: { id: wiki.id }
-        expect(response).to redirect_to(wikis_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -139,20 +134,45 @@ let(:wiki) { create(:wiki, user: user) }
     end
 
     describe "GET #edit" do
-      it "returns http redirect" do
+      it "returns http success" do
         get :edit, params: { id: wiki.id }
-        expect(response).to redirect_to(wikis_path)
+        expect(response).to have_http_status(:success)
+      end
+
+      it "renders the #edit view" do
+        get :edit, params: { id: wiki.id }
+        expect(response).to render_template :edit
+      end
+
+      it "assigns wiki to be updated to @wiki" do
+        get :edit, params: { id: wiki.id }
+        wiki_instance = assigns(:wiki)
+
+        expect(wiki_instance.id).to eq wiki.id
+        expect(wiki_instance.title).to eq wiki.title
+        expect(wiki_instance.body).to eq wiki.body
       end
     end
 
     describe "PUT #update" do
-      it "returns http redirect" do
+      it "updates wiki with expected attribtes" do
         new_title = RandomData.random_sentence
         new_body = RandomData.random_paragraph
 
         put :update, params: { id: wiki.id, wiki: { title: new_title, body: new_body } }
 
-        expect(response).to redirect_to(wikis_path)
+        updated_wiki = assigns(:wiki)
+        expect(updated_wiki.id).to eq wiki.id
+        expect(updated_wiki.title).to eq new_title
+        expect(updated_wiki.body).to eq new_body
+      end
+
+      it "redirects to the updated wiki" do
+        new_title = RandomData.random_sentence
+        new_body = RandomData.random_paragraph
+
+        put :update, params: { id: wiki.id, wiki: { title: new_title, body: new_body } }
+        expect(response).to redirect_to wiki
       end
     end
 
