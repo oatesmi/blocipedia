@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-md-8">
     <h4><%= link_to wiki.title, wiki %></h4>
+    <% if @wiki.private == true %>
+      <span class="label label-warning">Private</span>
+    <% end %>
   </div>
   <div class="col-md-4">
     <%= link_to "Edit", edit_wiki_path(wiki), class: 'btn btn-info' %>

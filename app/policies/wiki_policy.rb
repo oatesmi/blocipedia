@@ -9,11 +9,11 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def new
-    user.try(:admin?) || user.try(:premium?)
+    user.present?
   end
 
   def create
-    user.try(:admin?) || user.try(:premium?)
+    user.present?
   end
 
   def edit

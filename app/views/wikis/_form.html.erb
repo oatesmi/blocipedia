@@ -18,8 +18,10 @@
     <%= f.text_field :body, rows: 8, class: 'form-control', placeholder: "Enter wiki body" %>
   <% end %>
   <div class="form-group">
-    <%= f.label :private %>
-    <%= f.check_box :private %>
+    <% if current_user.premium? || current_user.admin? %>
+      <%= f.label :private %>
+      <%= f.check_box :private %>
+    <% end %>
   </div>
   <%= f.submit "Save", class: 'btn btn-success' %>
   <%= link_to 'Cancel', wikis_path, class: 'btn btn-danger' %>

@@ -15,11 +15,11 @@ class ApplicationPolicy
   end
 
   def create?
-    user.try(:admin?) || user.try(:premium?)
+    user.present?
   end
 
   def new?
-    user.try(:admin?) || user.try(:premium?)
+    user.present?
   end
 
   def update?
