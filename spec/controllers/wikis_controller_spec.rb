@@ -243,16 +243,16 @@ let(:wiki) { create(:wiki, user: user) }
 
     describe "POST #create" do
       it "increases the number of wikis by 1" do
-        expect{ post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph } } }.to change(Wiki,:count).by(1)
+        expect{ post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph, private: false } } }.to change(Wiki,:count).by(1)
       end
 
       it "assigns the new wiki to @wiki" do
-        post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+        post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph, private: false } }
         expect(assigns(:wiki)).to eq Wiki.last
       end
 
       it "redirects to the new wiki" do
-        post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+        post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph, private: false } }
         expect(response).to redirect_to Wiki.last
       end
     end
@@ -367,16 +367,16 @@ let(:wiki) { create(:wiki, user: user) }
 
     describe "POST #create" do
       it "increases the number of wikis by 1" do
-        expect{ post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph } } }.to change(Wiki,:count).by(1)
+        expect{ post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph, private: false } } }.to change(Wiki,:count).by(1)
       end
 
       it "assigns the new wiki to @wiki" do
-        post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+        post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph, private: false } }
         expect(assigns(:wiki)).to eq Wiki.last
       end
 
       it "redirects to the new wiki" do
-        post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+        post :create, params: { wiki: { title: RandomData.random_sentence, body: RandomData.random_paragraph, private: false } }
         expect(response).to redirect_to Wiki.last
       end
     end
