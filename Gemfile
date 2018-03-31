@@ -36,8 +36,25 @@ end
 
  gem 'thor', '0.19.1'
 
+ gem 'figaro', '1.0'
+
  group :development do
    gem 'listen', '~> 3.0.5'
  end
 
  gem 'bootstrap-sass'
+
+ gem 'devise'
+
+ gem 'pundit'
+
+ gem 'bcrypt', '~> 3.1.7'
+
+ group :development, :test do
+   gem 'rspec-rails', '~> 3.7'
+   gem 'factory_bot_rails'
+   gem 'rails-controller-testing'
+   gem 'shoulda'
+   gem 'pundit-matchers'
+   gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+ end
