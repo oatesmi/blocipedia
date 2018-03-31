@@ -56,4 +56,5 @@ end
    gem 'rails-controller-testing'
    gem 'shoulda'
    gem 'pundit-matchers'
+   gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
  end
