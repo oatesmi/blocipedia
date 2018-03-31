@@ -7,6 +7,11 @@ class User < ApplicationRecord
          authentication_keys: [:login]
 
   attr_accessor :login
+
+
+  after_initialize { self.role ||= :standard }
+  before_save { self.email ||= email.downcase }
+
   validates :username,
             presence: true,
             uniqueness: { case_sensitive: false },
@@ -17,7 +22,8 @@ class User < ApplicationRecord
             presence: true,
             uniqueness: { case_sensitive: false },
             length: { minimum: 6 }
-  # has_secure_password
+
+  enum role: [:standard, :premium, :admin]
 
   def validate_username
     if User.where(email: username).exists?
