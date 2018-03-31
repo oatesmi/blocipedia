@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :wikis
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -6,9 +7,17 @@ class User < ApplicationRecord
          authentication_keys: [:login]
 
   attr_accessor :login
-  validates :username, presence: :true, uniqueness: { case_sensitive: false }
+  validates :username,
+            presence: true,
+            uniqueness: { case_sensitive: false },
+            length: { minimum: 3, maximum: 15 }
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
   validate :validate_username
+  validates :email,
+            presence: true,
+            uniqueness: { case_sensitive: false },
+            length: { minimum: 6 }
+  # has_secure_password
 
   def validate_username
     if User.where(email: username).exists?
