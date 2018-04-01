@@ -36,6 +36,6 @@ class ChargesController < ApplicationController
       wiki.private = false
     end
     current_user.standard!
-    redirect_to root_path
+    redirect_to downgrade_to_standard_path
   end
 end

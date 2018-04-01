@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :charges, only: [:new, :create]
 
   post 'downgrade', to: 'charges#downgrade'
+  get 'downgrade_to_standard', to: 'charges#downgrade_to_standard'
 
   get 'welcome/index'
 
