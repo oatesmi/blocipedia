@@ -22,8 +22,7 @@ class ChargesController < ApplicationController
       currency: 'usd'
     )
 
-    current_user.premium! if current_user.standard?
-    redirect_to cancel_charge_path
+    current_user.premium!
 
     # stripe will send back CardErrors, with friedly messages when something goes wrong
     # this rescue block catches and displays those errors

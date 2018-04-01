@@ -1,5 +1,0 @@
-<%= form_tag charges_path do %>
-  <% if current_user.premium? %>
-    <%= link_to "Downgrade to Standard", '#', :onclick => current_user.standard! %>
-  <% end %>
-<% end %>
