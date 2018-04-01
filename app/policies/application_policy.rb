@@ -34,6 +34,10 @@ class ApplicationPolicy
     record.user == user || user.try(:admin?)
   end
 
+  def downgrade_to_standard?
+    user.try(:premium?)
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end
