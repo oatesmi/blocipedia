@@ -31,9 +31,11 @@ class ChargesController < ApplicationController
       redirect_to new_charge_path
   end
 
-  private
-
-  def downgrade_to_standard
-    current_user.standard! if current_user.premium?
+  def downgrade
+    current_user.wikis.each do |wiki|
+      wiki.private = false
+    end
+    current_user.standard!
+    redirect_to root_path
   end
 end
