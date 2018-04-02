@@ -36,10 +36,10 @@ class WikiPolicy < ApplicationPolicy
     end
 
     def resolve
-      if @user
-        return @scope.all
+      if user.admin? || user.premium?
+        scope.all
       else
-        return @scope.none
+        scope.where(private: false)
       end
     end
   end
