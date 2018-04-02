@@ -14,16 +14,16 @@ class ApplicationPolicy
     scope.where(:id => record.id).exists?
   end
 
-  def create?
-    user.try(:admin?) || user.try(:premium?)
+  def new?
+    user.present?
   end
 
-  def new?
-    user.try(:admin?) || user.try(:premium?)
+  def create?
+    new?
   end
 
   def update?
-    user.present?
+    create?
   end
 
   def edit?
@@ -32,10 +32,6 @@ class ApplicationPolicy
 
   def destroy?
     record.user == user || user.try(:admin?)
-  end
-
-  def downgrade_to_standard?
-    user.try(:premium?)
   end
 
   def scope

@@ -5,23 +5,23 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show
-    true
+    record.private ? (user.admin? || (record.user == user)) : user.present?
   end
 
   def new
-    user.try(:admin?) || user.try(:premium?)
+    user.present?
   end
 
   def create
-    user.try(:admin?) || user.try(:premium?)
+    new?
   end
 
   def edit
-    update?
+    create?
   end
 
   def update
-    user.present?
+    edit?
   end
 
   def destroy

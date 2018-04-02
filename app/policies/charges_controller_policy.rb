@@ -15,7 +15,7 @@ class ChargesControllerPolicy
     new?
   end
 
-  def downgrade_to_standard?
+  def downgrade?
     user.try(:premium?)
   end
 
