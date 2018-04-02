@@ -19,8 +19,9 @@
   <% end %>
   <% if current_user.admin? || current_user.premium? %>
     <div class="form-group">
-      <%= f.label :private %>
-      <%= f.check_box :private %>
+      <%= f.label :private, class: 'checkbox' do %>
+        <%= f.check_box :private %> Private Wiki
+      <% end %>
     </div>
   <% end %>
   <%= f.submit "Save", class: 'btn btn-success' %>

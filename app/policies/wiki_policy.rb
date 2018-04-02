@@ -1,30 +1,29 @@
 class WikiPolicy < ApplicationPolicy
-
-  def index
+  def index?
     true
   end
 
-  def show
+  def show?
     record.private ? (user.admin? || (record.user == user)) : user.present?
   end
 
-  def new
+  def new?
     user.present?
   end
 
-  def create
+  def create?
     new?
   end
 
-  def edit
-    create?
+  def edit?
+    show?
   end
 
-  def update
+  def update?
     edit?
   end
 
-  def destroy
+  def destroy?
     record.user == user || user.try(:admin?)
   end
 

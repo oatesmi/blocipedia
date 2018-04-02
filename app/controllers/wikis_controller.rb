@@ -8,8 +8,6 @@ class WikisController < ApplicationController
   def show
     @wiki = Wiki.find(params[:id])
     authorize @wiki
-    @wiki.user = current_user
-    @wiki.private = false if current_user.standard?
   end
 
   def new
@@ -20,6 +18,7 @@ class WikisController < ApplicationController
   def create
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
+    @wiki.private = false if current_user.standard?
     authorize @wiki
 
     if @wiki.save
@@ -39,6 +38,7 @@ class WikisController < ApplicationController
   def update
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
+    wiki.private = false if current_user.standard?
     authorize @wiki
 
     if @wiki.save

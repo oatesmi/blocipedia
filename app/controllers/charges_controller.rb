@@ -33,7 +33,7 @@ class ChargesController < ApplicationController
 
   def downgrade
     current_user.wikis.each do |wiki|
-      wiki.private = false
+      wiki.update(:private => false)
     end
     current_user.standard!
     redirect_to downgrade_to_standard_path
