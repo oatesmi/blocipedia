@@ -2,10 +2,8 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def downgrade
-    current_user.wikis.each do |wiki|
-      wiki.private = false
-    end
+    current_user.wikis.update_all(private: false)
     current_user.standard!
-    redirect_to root_path
+    redirect_to downgrade_confirmation_path
   end
 end

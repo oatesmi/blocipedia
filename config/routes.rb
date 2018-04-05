@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   resources :wikis
   resources :charges, only: [:new, :create]
 
-  get 'downgrade', to: 'users#downgrade'
-  post 'downgrade_to_standard', to: 'users#downgrade_to_standard'
+  post 'downgrade', to: 'users#downgrade'
+  get 'downgrade_confirmation', to: 'users#downgrade_confirmation'
 
   get 'welcome/index'
 
