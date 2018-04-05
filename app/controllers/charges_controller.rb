@@ -1,12 +1,11 @@
 class ChargesController < ApplicationController
-
   before_action :authenticate_user!
 
   def new
   end
 
   def create
-    @amount = 1500
+    amount = 1500
 
     #creates a stripe customer object, for associating with the charge
     customer = Stripe::Customer.create(
@@ -17,7 +16,7 @@ class ChargesController < ApplicationController
     #where the real magic happens
     charge = Stripe::Charge.create(
       customer: customer.id, #this is not the app user_id
-      amount: @amount, #in pennies
+      amount: amount, #in pennies
       description: "Upgrade to Premium",
       currency: 'usd'
     )
