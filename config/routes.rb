@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :wikis
+  resources :charges, only: [:new, :create]
+
+  post 'downgrade', to: 'users#downgrade'
+  get 'downgrade_confirmation', to: 'users#downgrade_confirmation'
 
   get 'welcome/index'
 

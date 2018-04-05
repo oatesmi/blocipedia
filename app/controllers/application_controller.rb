@@ -42,7 +42,6 @@ class ApplicationController < ActionController::Base
       flash[:alert] = "You are not authorized to do this."
       if current_user
         redirect_to wikis_path
-        flash[:alert] = "You are not authorized to do this."
       else
         redirect_to(new_user_session_path)
       end

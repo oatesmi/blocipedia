@@ -8,6 +8,8 @@ class WikisController < ApplicationController
   def show
     @wiki = Wiki.find(params[:id])
     authorize @wiki
+    @wiki.user = current_user
+    @wiki.private = false if current_user.standard?
   end
 
   def new

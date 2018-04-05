@@ -50,6 +50,8 @@ end
 
  gem 'bcrypt', '~> 3.1.7'
 
+ gem 'stripe'
+
  group :development, :test do
    gem 'rspec-rails', '~> 3.7'
    gem 'factory_bot_rails'

@@ -5,7 +5,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show
-    true
+    record.private ? (user.admin? || (record.user == user)) : user.present?
   end
 
   def new
@@ -13,15 +13,15 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def create
-    user.present?
+    new?
   end
 
   def edit
-    update?
+    create?
   end
 
   def update
-    user.present?
+    edit?
   end
 
   def destroy
