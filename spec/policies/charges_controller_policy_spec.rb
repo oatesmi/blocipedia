@@ -23,7 +23,7 @@ describe ChargesControllerPolicy do
     it { should forbid_action(:new) }
     it { should forbid_action(:create) }
 
-    it { should permit_action(:downgrade_to_standard) }
+    it { should permit_action(:downgrade) }
   end
 
   context "logged in as an admin user" do

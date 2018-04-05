@@ -1,5 +1,4 @@
 class ChargesControllerPolicy
-
   attr_reader :user, :ctrlr
 
   def initialize(user, ctrlr)
