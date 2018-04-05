@@ -5,5 +5,7 @@ class Wiki < ApplicationRecord
   validates :body, length: { minimum: 5 }, presence: true
   validates :private, inclusion: { in: [true, false ] }
 
-  # default_scope { order('created_at DESC') }
+  default_scope { order('created_at DESC') }
+
+
 end

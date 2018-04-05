@@ -14,16 +14,16 @@ class ApplicationPolicy
     scope.where(:id => record.id).exists?
   end
 
-  def create?
-    user.present?
-  end
-
   def new?
     user.present?
   end
 
+  def create?
+    new?
+  end
+
   def update?
-    user.present?
+    create?
   end
 
   def edit?
