@@ -6,9 +6,26 @@
     <%= link_to "New Wiki", new_wiki_path, class: 'btn btn-success' %>
   </div>
 </div>
-<hr>
+
+<br>
+
+<div class='row'>
+  <div class='col-md-8'>
+    <% @wikis.each do |wiki| %>
+      <h4><%= link_to wiki.title, wiki %></h4>
+
+      <h6>Published <%= time_ago_in_words(wiki.created_at) %> ago by <%= wiki.user.username %></h6>
+
+      <% if wiki != @wikis.last %>
+        -----
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- <hr>
   <% if @wikis.count > 0 %>
     <%= render @wikis %>
   <% else %>
     <h4>There are no wikis yet.</h4>
-  <% end %>
+  <% end %> -->
