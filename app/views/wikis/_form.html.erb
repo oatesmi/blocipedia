@@ -17,7 +17,7 @@
     <%= f.label :body %>
     <%= f.text_field :body, rows: 8, class: 'form-control', placeholder: "Enter wiki body" %>
   <% end %>
-  <% if current_user.admin? || current_user.premium? %>
+  <% if current_user.admin? || (current_user.premium? && current_user == @wiki.user) %>
     <div class="form-group">
       <%= f.label :private, class: 'checkbox' do %>
         <%= f.check_box :private %> Private Wiki
@@ -26,4 +26,7 @@
   <% end %>
   <%= f.submit "Save", class: 'btn btn-success' %>
   <%= link_to 'Cancel', wikis_path, class: 'btn btn-danger' %>
+  <% if (current_user.premium? && @wiki.user == current_user) || current_user.admin? %>
+    <%= link_to "Add Collaborator", new_wiki_collaborator_path(@wiki), class: 'btn btn-warning' %>
+  <% end %>
 <% end %>

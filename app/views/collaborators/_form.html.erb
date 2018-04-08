@@ -1,10 +1,19 @@
-<% if current_user.admin? || current_user.premium? %>
-  <div class="collaborator-add">
-    <%= form_tag [wiki, Collaborator.new] do %>
-      <div class="collaborator-search">
-        <%= text_field_tag :search, params[:seach], class: 'form-control', placeholder: "Add collaborator by email" %>
-        <%= submit_tag "Add", class: 'btn btn-success' %>
-      </div>
-    <% end %>
+<%= form_for([@wiki, @collaborator]) do |f| %>
+  <% if @collaborator.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@collaborator.errors.count, "error") %>.</h4>
+      <ul>
+        <% @collaborator.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.select 'user_id', options_for_select(@users.collect { |u| [ u.username, u.id ] } ) %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Add collaborator", class: 'btn btn-success' %>
   </div>
 <% end %>

@@ -13,10 +13,15 @@
   <div class='col-md-8'>
     <% @wikis.each do |wiki| %>
       <h4><%= link_to wiki.title, wiki %></h4>
-
       <h6>Published <%= time_ago_in_words(wiki.created_at) %> ago by <%= wiki.user.username %></h6>
+      <% if (current_user.premium? && @wiki.user == current_user) || current_user.admin? %>
+        <%= link_to 'View Collaborators', wiki_collaborators_path(wiki) %> ||
+        <%= link_to 'Add Collaborator', new_wiki_collaborator_path(wiki) %>
+      <% end %>
 
       <% if wiki != @wikis.last %>
+      &nbsp;
+      <br>
         -----
       <% end %>
     <% end %>
