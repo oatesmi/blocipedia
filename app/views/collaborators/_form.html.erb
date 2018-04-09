@@ -1,19 +1,18 @@
-<%= form_for([@wiki, @collaborator]) do |f| %>
-  <% if @collaborator.errors.any? %>
-    <div class="alert alert-danger">
-      <h4><%= pluralize(@collaborator.errors.count, "error") %>.</h4>
-      <ul>
-        <% @collaborator.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
+<% if wiki.user == current_user && wiki.private? && (current_user.premium? || current_user.admin?) %>
+  <h3>Add Collaborators</h3>
+  &nbsp;
+  <%= form_for [wiki , Collaborator.new] do |f| %>
+    <%= email_field_tag :collaborator %>
+    <%= f.submit "Add collaborator", class: 'btn btn-primary' %>
   <% end %>
 
-  <div class="field">
-    <%= f.select 'user_id', options_for_select(@users.collect { |u| [ u.username, u.id ] } ) %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Add collaborator", class: 'btn btn-success' %>
-  </div>
+  <h3>Manage Collaborators</h3>
+  &nbsp;
+  <% wiki.collaborators.each do |f| %>
+    <div>
+      <% user = User.find(f.user_id) %>
+      <% user.email %>
+      <%= link_to "Remove #{user.username} as a collaborator?", wiki_collaborator_path(@wiki), method: :delete %>
+    </div>
+  <% end %>
 <% end %>

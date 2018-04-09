@@ -23,9 +23,6 @@
         <% if policy(@wiki).destroy? %>
           <%= link_to "Delete", @wiki, method: :delete, class: 'btn btn-danger' %>
         <% end %>
-        <% if (current_user.premium? && @wiki.user == current_user) || current_user.admin? %>
-          <%= link_to 'View Collaborators', wiki_collaborators_path(@wiki), class: 'btn btn-warning' %>
-        <% end %>
       </div>
     </div>
   <% end %>
