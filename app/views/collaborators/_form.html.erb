@@ -10,9 +10,9 @@
   &nbsp;
   <% wiki.collaborators.each do |f| %>
     <div>
-      <!-- <% user = User.find(f.user_id) %> -->
+      <% user = User.find(f.user_id) %>
       <% f.user.email %>
-      <%= link_to "Remove #{user.username} as a collaborator?", wiki, method: :delete %>
+      <%= link_to "Remove #{user.username} as a collaborator?", wiki_collaborator_path(@wiki), method: :delete %>
     </div>
   <% end %>
 <% end %>
