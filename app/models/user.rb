@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  has_many :wikis, through: :collabs
+  has_many :collaborators
+  has_many :wikis, through: :collaborators
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -41,11 +42,11 @@ class User < ApplicationRecord
     end
   end
 
-  def collabs
-    Collab.where(user_id: id)
+  def collaborators
+    Collaborator.where(user_id: id)
   end
 
   def wikis
-    collabs.wikis
+    collaborators.wikis
   end
 end
