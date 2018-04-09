@@ -1,7 +1,5 @@
 class Wiki < ApplicationRecord
-  belongs_to :user
-  has_many :collaborators
-  has_many :users, through: :collaborators
+  has_many :users, through: :collabs
 
   validates :title, length: { minimum: 5 }, presence: true
   validates :body, length: { minimum: 5 }, presence: true
@@ -9,4 +7,11 @@ class Wiki < ApplicationRecord
 
   default_scope { order('created_at DESC') }
 
+  def collabs
+    Collab.where(wiki_id: id)
+  end
+
+  def users
+    collabs.users
+  end
 end
