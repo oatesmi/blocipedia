@@ -10,6 +10,6 @@
   </div>
   <div class="col-md-8">
     <%= render partial: 'form', locals: { wiki: @wiki } %>
-    <%= render partial: 'collaborators/form', locals: { wiki: @wiki, user: @user } %>
+    <%= render partial: 'collaborators/collaborator', locals: { wiki: @wiki, user: @user } %>
   </div>
 </div>

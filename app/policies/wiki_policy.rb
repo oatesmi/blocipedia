@@ -20,7 +20,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.user == user || user.try(:admin?)
+    user.present?
   end
 
   class Scope

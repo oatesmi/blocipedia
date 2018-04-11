@@ -1,6 +1,7 @@
 class User < ApplicationRecord
+  has_many :wikis
   has_many :collaborators
-  has_many :wikis, through: :collaborators
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -39,13 +40,5 @@ class User < ApplicationRecord
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end
-  end
-
-  def collaborators
-    Collaborator.where(user_id: id)
-  end
-
-  def wikis
-    collaborators.wikis
   end
 end

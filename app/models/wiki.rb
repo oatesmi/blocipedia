@@ -1,4 +1,5 @@
 class Wiki < ApplicationRecord
+  belongs_to :user
   has_many :collaborators
   has_many :users, through: :collaborators
 
@@ -8,12 +9,5 @@ class Wiki < ApplicationRecord
 
   default_scope { order('created_at DESC') }
 
-  def collaborators
-    Collaborator.where(wiki_id: id)
-  end
-
-  def users
-    collaborators.users
-  end
-
+  
 end

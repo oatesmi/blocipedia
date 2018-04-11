@@ -13,7 +13,7 @@
   <div class='col-md-8'>
     <% @wikis.each do |wiki| %>
       <h4><%= link_to wiki.title, wiki %></h4>
-      <h6>Published <%= time_ago_in_words(wiki.created_at) %> ago by <%= wiki.user.username %></h6>
+      <h6>Published <%= time_ago_in_words(wiki.created_at) %> ago by <%= wiki.users %></h6>
       <% if wiki != @wikis.last %>
       &nbsp;
       <br>

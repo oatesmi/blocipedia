@@ -1,41 +1,34 @@
 class CollaboratorsController < ApplicationController
-
-  def index
-    @collaborators = @wiki.collaborators
-  end
+  before_action :authenticate_user!
 
   def new
-    # @users = User.all
     @collaborator = Collaborator.new
   end
 
   def create
-    collaborator_user = User.find_by_email(params[:collaborator])
-    wiki = Wiki.find(params[:wiki_id])
-    if wiki.collaborators.exists?(user_id: collaborator_user.id)
-      flash[:notice] = "This collaborator was already added."
-      redirect_to wiki
+    @wiki = Wiki.find(params[:wiki_id])
+    @collaborator_user = User.find_by_email(params[:collaborator])
+    @collaborator = Collaborator.new(user_id: @collaborator_user.id, wiki_id: @wiki.id)
+
+    if @collaborator.save
+      redirect_to @wiki
+      flash[:notice] = "Collaborator added."
     else
-      collaborator = Collaborator.new(user_id: collaborator_user.id, wiki_id: wiki.id)
-      if collaborator.save
-        flash[:notice] = "Collaborator added."
-      else
-        flash[:alert] = "Failed to add collaborator."
-      end
-      redirect_to wiki
+      redirect_to @wiki
+      flash[:alert] = "Failed to add collaborator."
     end
   end
 
   def destroy
-   wiki = Wiki.find(params[:wiki_id])
-   collaborator = Collaborator.find(params[:id])
-   collaborator_user = User.find(collaborator.user_id)
+    @collaborator = Collaborator.find(params[:id])
+    @wiki = collaborator.wiki
+    if @collaborator.destroy
+      redirect_to @wiki
+      flash[:notice] = "Collaborator removed."
+    else
+      redirect_to @wiki
+      flash[:alert] = "Failed to remove collaborator."
+    end
+  end
 
-   if collaborator.destroy
-     flash[:notice] = "Collaborator removed."
-   else
-     flash[:alert] = "Failed to remove collaborator."
-   end
-   redirect_to wiki
- end
 end
