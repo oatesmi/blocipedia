@@ -8,7 +8,7 @@
             <span class="label label-warning">Private</span>
           <% end %>
           <small>
-            created <%= time_ago_in_words(@wiki.created_at) %> ago by <%= @wiki.users %>
+            created <%= time_ago_in_words(@wiki.created_at) %> ago by <%= @wiki.user.username %>
           </small>
         </div>
         <hr>
@@ -25,14 +25,16 @@
         <% end %>
       </div>
     </div>
+    &nbsp;
+    <% if @wiki.private == true %>
+      <h4>Collaborators</h4>
+      <% if @wiki.collaborators.count == 0 %>
+        <small> There are no collaborators on this wiki </small>
+      <% else %>
+        <% @wiki.collaborators.each do |collaborator| %>
+          <li><%= collaborator.user.username %></li>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 </div>
-
-<% if @wiki.private == true %>
-  <h2>Collaborators</h2>
-  <% if @wiki.collaborators.count == 0 %>
-    <small> There are no collaborators on this wiki </small>
-  <% else %>
-    <%= render @wiki.collaborators %>
-  <% end %>
-<% end %>
