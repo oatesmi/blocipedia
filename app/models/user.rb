@@ -45,8 +45,4 @@ class User < ApplicationRecord
   def collaborators
     Collaborator.where(user_id: id)
   end
-
-  def wikis
-    collaborators.wikis
-  end
 end

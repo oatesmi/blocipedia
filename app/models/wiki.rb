@@ -11,8 +11,4 @@ class Wiki < ApplicationRecord
   def collaborators
     Collaborator.where(wiki_id: id)
   end
-
-  def users
-    collaborators.users
-  end
 end
