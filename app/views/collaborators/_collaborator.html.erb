@@ -8,11 +8,9 @@
 
   <h3>Manage Collaborators</h3>
   &nbsp;
-  <% @wiki.collaborators.each do |f| %>
+  <% @wiki.collaborators.each do |c| %>
     <div>
-      <% user = User.find(f.user_id) %>
-      <% f.user.email %>
-      <%= link_to "Remove #{user.username} as a collaborator?", wiki_collaborator_path(@wiki), method: :delete %>
+      <%= link_to "Remove #{c.user.username} as a collaborator?", wiki_collaborator_path(@wiki, c), method: :delete, :data => { :confirm => 'Are you sure?' } %>
     </div>
   <% end %>
 <% end %>
