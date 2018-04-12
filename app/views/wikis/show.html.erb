@@ -13,7 +13,7 @@
         </div>
         <hr>
         <div class="row">
-          <p><%= @wiki.body %></p>
+          <p><%= markdown(@wiki.body) %></p>
         </div>
       </div>
       <div class="col-md-4">
@@ -24,6 +24,10 @@
           <%= link_to "Delete", @wiki, method: :delete, class: 'btn btn-danger' %>
         <% end %>
       </div>
+      <div class='col-md-4'>
+        <% if @wiki.private? %>
+          <%= render partial: 'collaborators/form', locals: { wiki: @wiki } %>
+        <% end %>
     </div>
   <% end %>
 </div>
