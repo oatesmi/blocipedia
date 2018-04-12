@@ -29,12 +29,4 @@ class ChargesController < ApplicationController
       flash[:alert] = e.message
       redirect_to new_charge_path
   end
-
-  def downgrade
-    current_user.wikis.each do |wiki|
-      wiki.update(:private => false)
-    end
-    current_user.standard!
-    redirect_to downgrade_to_standard_path
-  end
 end
