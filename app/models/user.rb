@@ -14,6 +14,7 @@ class User < ApplicationRecord
 
   after_initialize { self.role ||= :standard }
   before_save { self.email ||= email.downcase }
+  after_update :wikis_to_public
 
   validates :username,
             presence: true,
@@ -41,5 +42,11 @@ class User < ApplicationRecord
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end
+  end
+
+  private
+
+  def wikis_to_public
+    wikis.update_all(private: false)
   end
 end
