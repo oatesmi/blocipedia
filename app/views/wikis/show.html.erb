@@ -2,13 +2,13 @@
   <% if policy(@wiki).show? %>
     <div class="row">
       <div class="col-md-8">
-        <div>
+        <div class="row">
           <%= @wiki.title %> <br>
           <% if @wiki.private == true %>
             <span class="label label-warning">Private</span>
           <% end %>
           <small>
-            submitted <%= time_ago_in_words(@wiki.created_at) %> ago by <%= @wiki.user.username %>
+            created <%= time_ago_in_words(@wiki.created_at) %> ago by <%= @wiki.user.username %>
           </small>
         </div>
         <hr>
@@ -24,10 +24,17 @@
           <%= link_to "Delete", @wiki, method: :delete, class: 'btn btn-danger' %>
         <% end %>
       </div>
-      <div class='col-md-4'>
-        <% if @wiki.private? %>
-          <%= render partial: 'collaborators/form', locals: { wiki: @wiki } %>
-        <% end %>
     </div>
+    &nbsp;
+    <% if @wiki.private == true %>
+      <h4>Collaborators</h4>
+      <% if @wiki.collaborators.count == 0 %>
+        <small> There are no collaborators on this wiki </small>
+      <% else %>
+        <% @wiki.collaborators.each do |collaborator| %>
+          <li><%= collaborator.user.username %></li>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 </div>

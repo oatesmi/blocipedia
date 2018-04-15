@@ -1,0 +1,16 @@
+<% if @wiki.user == current_user && @wiki.private? && (current_user.premium? || current_user.admin?) %>
+  <h3>Add Collaborators</h3>
+  &nbsp;
+  <%= form_for [@wiki , Collaborator.new] do |f| %>
+    <%= email_field_tag :collaborator %>
+    <%= f.submit "Add collaborator", class: 'btn btn-primary' %>
+  <% end %>
+
+  <h3>Manage Collaborators</h3>
+  &nbsp;
+  <% @wiki.collaborators.each do |c| %>
+    <div>
+      <%= link_to "Remove #{c.user.username} as a collaborator?", wiki_collaborator_path(@wiki, c), method: :delete, :data => { :confirm => 'Are you sure?' } %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,6 +1,8 @@
 class User < ApplicationRecord
-  has_many :wikis, dependent: :destroy
-  has_many :collaborators, through: :wikis, dependent: :destroy
+  has_many :wikis
+  has_many :collaborators
+  has_many :wikis_collaborators, source: 'wiki', through: :collaborators
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

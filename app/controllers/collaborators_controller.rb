@@ -1,43 +1,37 @@
 class CollaboratorsController < ApplicationController
   before_action :authenticate_user!
 
+  def new
+    @collaborator = Collaborator.new
+  end
+
   def create
     @wiki = Wiki.find(params[:wiki_id])
-    @user = User.where('email LIKE ?', "%#{params[:search]}%").first
-
-    if @user
-      unless @wiki.collaborators.pluck(:user_id).include?(@user)
-        @collaborator = Collaborator.new(user_id: @user.id, wiki_id: @wiki.id)
+    @collaborator_user = User.find_by_email(params[:collaborator])
+    if @wiki.collaborators.exists?(user_id: @collaborator_user.id)
+      flash[:notice] = "This collaborator has already been added."
+      redirect_to @wiki
+    else
+      @collaborator = Collaborator.new(user_id: @collaborator_user.id, wiki_id: @wiki.id)
+      if @collaborator.save
+        redirect_to @wiki
+        flash[:notice] = "Collaborator added."
       else
-        flash[:alert] = "That user is already a collaborator."
-        redirect_back(fallback_location: @wiki)
-        return
+        redirect_to @wiki
+        flash[:alert] = "Failed to add collaborator."
       end
-    else
-      flash[:alert] = "No user matched."
-      redirect_back(fallback_location: @wiki)
-      return
     end
-
-    if @collaborator.save
-      flash[:notice] = "#{@user.username} has been added."
-    else
-      flash[:alert] = "here was an error adding the collaborator. Try again."
-    end
-
-    redirect_back(fallback_location: @wiki)
   end
 
   def destroy
-    @collaborator = Collaborator.find(params[:id])
-    @wiki = Wiki.find(params[:wiki_id])
-    @user = User.find(@collaborator.user_id)
+    @cid = Collaborator.find(params[:id])
 
-    if @collaborator.destroy
-      redirect_to edit_wiki_path(@wiki.id)
+    if @cid.destroy
+      flash[:notice] = "Collaborator removed."
     else
-      flash.now[:alert] = "Error. Can't remove from this wiki."
-      redirect_to edit_wiki_path(@wiki.id)
+      flash[:alert] = "Failed to remove collaborator."
     end
+    redirect_to @cid.wiki
   end
+
 end

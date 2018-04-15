@@ -1,7 +1,7 @@
 require 'faker'
 
 #create standard user
-20.times do
+5.times do
   User.create!(
     username: Faker::Internet.user_name(3..15),
     email: Faker::Internet.safe_email,
@@ -12,7 +12,7 @@ end
 users = User.all
 
 #create wikis
-100.times do
+10.times do
   Wiki.create!(
     user: users.sample,
     title: Faker::RickAndMorty.location,
@@ -34,6 +34,13 @@ admin_user = User.create!(
   email: 'adminuser@example.com',
   password: 'password',
   role: 'admin'
+)
+
+test_user = User.create!(
+  username: 'Mike',
+  email: 'oatesmi.74@gmail.com',
+  password: 'password',
+  role: 'standard'
 )
 
 puts "Seed finished"
