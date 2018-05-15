@@ -1,10 +1,6 @@
 class WikiPolicy < ApplicationPolicy
-  def index?
-    true
-  end
-
   def show?
-    record.private ? (user.admin? || (record.user == user)) : user.present?
+    true
   end
 
   def new?
@@ -24,7 +20,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.user == user || user.try(:admin?)
+    user.present?
   end
 
   class Scope
@@ -36,11 +32,26 @@ class WikiPolicy < ApplicationPolicy
     end
 
     def resolve
-      if user.admin? || user.premium?
-        scope.all
+      wikis = []
+      if user.admin?
+        wikis = scope.all
+      elsif user.premium?
+        all_wikis = scope.all
+        all_wikis.each do |wiki|
+          if wiki.private == false || wiki.user == user || wiki.users.include?(user)
+            wikis << wiki
+          end
+        end
       else
-        scope.where(private: false)
+        all_wikis = scope.all
+        wikis = []
+        all_wikis.each do |wiki|
+          if wiki.private == false || wiki.users.include?(user)
+            wikis << wiki
+          end
+        end
       end
+      wikis
     end
   end
 end

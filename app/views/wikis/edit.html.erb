@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>Edit <%= @wiki.title %></h1>
+  <h1>Edit "<%= @wiki.title %>"</h1>
 
 <div class="row">
   <div class="col-md-4">
@@ -10,15 +10,6 @@
   </div>
   <div class="col-md-8">
     <%= render partial: 'form', locals: { wiki: @wiki } %>
+    <%= render partial: 'collaborators/collaborator', locals: { wiki: @wiki, user: @user } %>
   </div>
 </div>
-
-
-<!-- <div class="page-header">
-  <h1>
-    Edit "<%= @wiki.title %>"
-  </h1>
-  <%= truncate(@wiki.body, length: 15) { link_to "View full wiki...", @wiki } %>
-</div>
-
-<%= render 'form' %> -->

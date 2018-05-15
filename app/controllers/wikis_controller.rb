@@ -1,25 +1,23 @@
 class WikisController < ApplicationController
+  before_action :authenticate_user!
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   def index
     @wikis = policy_scope(Wiki)
-    authorize @wikis
   end
 
   def show
     @wiki = Wiki.find(params[:id])
-    authorize @wiki
-    @wiki.user = current_user
-    @wiki.private = false if current_user.standard?
+    # @wiki_cols = User.where(id: @wiki.collaborators.pluck(:user_id))
   end
 
   def new
     @wiki = Wiki.new
-    authorize @wiki
   end
 
   def create
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
-    authorize @wiki
 
     if @wiki.save
       flash[:notice] = "Wiki was saved"
@@ -32,13 +30,14 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-    authorize @wiki
+    @wiki.user = current_user
+    @users = User.all
+    @collaborators = @wiki.collaborators
   end
 
   def update
     @wiki = Wiki.find(params[:id])
-    @wiki.assign_attributes(wiki_params)
-    authorize @wiki
+    @wiki.update_attributes(wiki_params)
 
     if @wiki.save
       flash[:notice] = "Wiki was saved"
@@ -51,7 +50,6 @@ class WikisController < ApplicationController
 
   def destroy
     @wiki = Wiki.find(params[:id])
-    authorize @wiki
 
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
