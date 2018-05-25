@@ -1,24 +1,21 @@
 # README
+<b>User Story -	Difficulty Rating</b>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* As a user, I want to sign up for a free account by providing a user name, password and email - 2
 
-Things you may want to cover:
+* As a user, I want to sign in and out of Blocipedia - 2
 
-* Ruby version
+* As a user with a standard account, I want to create, read, update, and delete public wikis - 3
 
-* System dependencies
+* As a developer, I want to offer three user roles: admin, standard, or premium - 4
 
-* Configuration
+* As a developer, I want to seed the development database automatically with users and wikis - 1
 
-* Database creation
+* As a user, I want to upgrade my account from a free to a paid plan - 4
 
-* Database initialization
+* As a premium user, I want to create private wikis - 3
 
-* How to run the test suite
+* As a user, I want to edit wikis using Markdown syntax - 2
 
-* Services (job queues, cache servers, search engines, etc.)
+* As a premium user, I want to add and remove collaborators for my private wikis - 3
 
-* Deployment instructions
-
-* ...
